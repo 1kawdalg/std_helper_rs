@@ -144,19 +144,19 @@ impl StrHelper {
 /// #[macro_use] extern crate std_helper;
 /// use std_helper::StrHelper;
 ///
-/// let helper = str!("Hi! ", "How are y", "ou", "?");
+/// let helper = str!("Hi!", ' ', "How are y".to_string(), "ou", "?");
 /// assert_eq!(helper.as_str(), "Hi! How are you?");
 /// assert_eq!(helper, str!("Hi! How are you?"));
 /// ```
 #[macro_export]
 macro_rules! str {
     () => {StrHelper::empty()};
-    ($elem:expr) => {StrHelper::new($elem)};
+    ($elem:expr) => {StrHelper::from_string($elem.to_string())};
 
     ($($elem:expr),*) => {
         {
             let mut helper = StrHelper::empty();
-            $(helper.push($elem);)*
+            $(helper.push($elem.to_string().as_str());)*
 
             helper
         }
